@@ -20,19 +20,24 @@ TOKKEN = "6502181588:AAEifHo_iMMmZi7YjUcPO2EoN2yy7pjenxY"
 updater = telegram.ext.Updater(TOKKEN,use_context=True)
 dispature = updater.dispatcher
 
-
+def bot_talk(update,context):
+    while True:
+        try:
+            msg = str(update.message.text).lower()
+            print(msg)
+        except:
+            continue
 
 # /period day period
 def period(update,context):
     data = str(update.message.text).lower()
-    print(data)
     ty = data.split()
     str1=""
     if len(ty)==2:
         read_csv_file(ty[1])
         update.message.reply_text(out_data)
     else:
-        update.message.reply_text('Try Again later')
+        update.message.reply_text('unable to find try again!')
 
 
 def wiki(update,context):
@@ -76,13 +81,14 @@ def whatsapp(update,context):
 
 
 def help(update,context):
-    help_text='''/whatsapp to generate direct message link\n '''
-    update.message.reply_text('''Send number to Me to generate the link...\nfor eg :    \nuser : /whatsapp 94333#####\nBot : link(https://a.....\ntest now''')
+    help_text='''/whatsapp "number" to generate direct message link for eg "/whatsapp 9344xxxxx"\n------------------------------------\n /wiki "About" to get the Wikipedia for eg "/wiki EllonMusk"\n------------------------------------\n /period "Day" to get the period for eg "/period monday"'''
+    update.message.reply_text(help_text)
 
-
+print("Started......")
 dispature.add_handler(telegram.ext.CommandHandler('start', start))
 dispature.add_handler(telegram.ext.CommandHandler('whatsapp',whatsapp))
 #dispature.add_handler(telegram.ext.CommandHandler('spammsg',spam_msg))
+
 dispature.add_handler(telegram.ext.CommandHandler('period',period))
 dispature.add_handler(telegram.ext.CommandHandler('wiki',wiki))
 dispature.add_handler(telegram.ext.CommandHandler('help', help))
