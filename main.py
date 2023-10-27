@@ -2,11 +2,17 @@ import telegram.ext
 import wikipedia
 import csv
 
-def read_csv_file(day):
-    global out_data
+def read_csv_file(day,year):
+    global out_data , reader
     out_data = ""
-    fp  = open('timetable.csv','r')
-    reader = csv.reader(fp)
+    if year=="1":
+        fp  = open('timetable.csv','r')
+        reader = csv.reader(fp)
+    elif year =="2":
+        fp = open('timetable1.csv','r')
+        reader = csv.reader(fp)
+    else:
+        pass
     for i in reader:
         if i[0].lower()==day:
             f = i
@@ -33,8 +39,9 @@ def period(update,context):
     data = str(update.message.text).lower()
     ty = data.split()
     str1=""
-    if len(ty)==2:
-        read_csv_file(ty[1])
+    if len(ty)==3:
+
+        read_csv_file(ty[2],ty[1])
         update.message.reply_text(out_data)
     else:
         update.message.reply_text('unable to find try again!')
@@ -81,7 +88,7 @@ def whatsapp(update,context):
 
 
 def help(update,context):
-    help_text='''/whatsapp "number" to generate direct message link for eg "/whatsapp 9344xxxxx"\n------------------------------------\n /wiki "About" to get the Wikipedia for eg "/wiki EllonMusk"\n------------------------------------\n /period "Day" to get the period for eg "/period monday"'''
+    help_text='''/whatsapp "number" to generate direct message link for eg "/whatsapp 9344xxxxx"\n------------------------------------\n /wiki "About" to get the Wikipedia for eg "/wiki EllonMusk"\n------------------------------------\n /period "year" "Day" to get the period for eg "/period 1 monday"'''
     update.message.reply_text(help_text)
 
 print("Started......")
