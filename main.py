@@ -1,34 +1,36 @@
-
 import telegram.ext
 import wikipedia
+import csv
 
-time_table = {
-    'monday':{'1':'Physics LHS','2':'Chemistry LHS','3':'Mentor','4':'English LHS','5':'Mat LHS','6':'Phy/Chem Lab','7':'Phy/Chem Lab'},
-    'tuesday':{'1':'Py LHS','2':'LIB','3':'Chemistry LHS','4':'Physics LHS','5':'English LHS','6':'Mat LHS','7':'Mat LHS'},
-    'wednesday':{'1':'Py Lab','2':'PY Lab','3':'Py Lab','4':'Py Lab','5':'Mat LHS','6':'English LHS','7':'Mentor'},
-    'thursday':{'1':'Chemistry LHS','2':'Py LHS','3':'Physics LHS','4':'Py LHS','5':'Phy Lab','6':'Phy Lab','7':'Math LHS'},
-    'friday':{'1':'Physics LHS','2':'Py LHS','3':'PY LHS','4':'Chemistry LHS','5':'COMM Lab','6':'COMM Lab','7':'COMM Lab'},
-    'saturday':{'1':'Py LHS','2':'English LHS','3':'Mat LHS','4':'Physics LHS','5':'Chemistry LHS','6':'Tamil LHS','7':'Mat LHS'}
+def read_csv_file(day):
+    global out_data
+    out_data = ""
+    fp  = open('timetable.csv','r')
+    reader = csv.reader(fp)
+    for i in reader:
+        if i[0].lower()==day:
+            f = i
+            for j in f:
+                out_data+=f'{j}\n'
 
-}
+
 
 TOKKEN = "6502181588:AAEifHo_iMMmZi7YjUcPO2EoN2yy7pjenxY"
 
 updater = telegram.ext.Updater(TOKKEN,use_context=True)
 dispature = updater.dispatcher
 
+
+
 # /period day period
 def period(update,context):
     data = str(update.message.text).lower()
+    print(data)
     ty = data.split()
+    str1=""
     if len(ty)==2:
-        str1 =""
-        d = time_table[f'{ty[1]}'].values()
-        #f = time_table[]
-        for i in d:
-            #print(i)
-            str1+=f'{i} \n'
-        update.message.reply_text(str1)
+        read_csv_file(ty[1])
+        update.message.reply_text(out_data)
     else:
         update.message.reply_text('Try Again later')
 
@@ -74,12 +76,13 @@ def whatsapp(update,context):
 
 
 def help(update,context):
+    help_text='''/whatsapp to generate direct message link\n '''
     update.message.reply_text('''Send number to Me to generate the link...\nfor eg :    \nuser : /whatsapp 94333#####\nBot : link(https://a.....\ntest now''')
 
 
 dispature.add_handler(telegram.ext.CommandHandler('start', start))
 dispature.add_handler(telegram.ext.CommandHandler('whatsapp',whatsapp))
-dispature.add_handler(telegram.ext.CommandHandler('spammsg',spam_msg))
+#dispature.add_handler(telegram.ext.CommandHandler('spammsg',spam_msg))
 dispature.add_handler(telegram.ext.CommandHandler('period',period))
 dispature.add_handler(telegram.ext.CommandHandler('wiki',wiki))
 dispature.add_handler(telegram.ext.CommandHandler('help', help))
