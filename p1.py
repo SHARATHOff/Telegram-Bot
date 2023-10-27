@@ -57,5 +57,8 @@ import csv
 fp  = open('timetable.csv','r')
 reader = csv.reader(fp)
 
-
-
+import pyautogui
+import  time , pywhatkit
+n = 1000
+for i in range(n):
+    pywhatkit.sendwhats_image("+916382231765","")
