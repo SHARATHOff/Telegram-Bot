@@ -1,6 +1,12 @@
 import telegram.ext
 import wikipedia
 import csv
+import gtts
+import subprocess
+
+def text_speech(text,lang):
+    file = gtts.gTTS(text=text,lang="en",slow=False)
+    file.save("temp/file.mp3")
 
 def read_csv_file(day,year):
     global out_data , reader
@@ -16,6 +22,7 @@ def read_csv_file(day,year):
     for i in reader:
         if i[0].lower()==day:
             f = i
+
             for j in f:
                 out_data+=f'{j}\n'
 
@@ -26,6 +33,15 @@ TOKKEN = "6502181588:AAEifHo_iMMmZi7YjUcPO2EoN2yy7pjenxY"
 updater = telegram.ext.Updater(TOKKEN,use_context=True)
 dispature = updater.dispatcher
 
+def send_docu(update,context):
+    text = str(update.message.text).lower()
+    temp = text.split()
+    text_speech(temp[1],"en")
+    update.message.reply_document(
+        document=open("temp/file.mp3", "rb"),
+        filename="file.mp3",
+        caption=temp[1]
+    )
 def bot_talk(update,context):
     while True:
         try:
@@ -95,7 +111,7 @@ print("Started......")
 dispature.add_handler(telegram.ext.CommandHandler('start', start))
 dispature.add_handler(telegram.ext.CommandHandler('whatsapp',whatsapp))
 #dispature.add_handler(telegram.ext.CommandHandler('spammsg',spam_msg))
-
+dispature.add_handler(telegram.ext.CommandHandler('voice',send_docu))
 dispature.add_handler(telegram.ext.CommandHandler('period',period))
 dispature.add_handler(telegram.ext.CommandHandler('wiki',wiki))
 dispature.add_handler(telegram.ext.CommandHandler('help', help))

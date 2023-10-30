@@ -15,6 +15,11 @@ for i in l1:
         pass
 '''
 
+def A(n):
+    if n==1:
+        print('krishna')
+    A()
+    print("sharath")
 
 import  sys
 sys.setrecursionlimit(10000)
@@ -24,11 +29,14 @@ def hanoi( N , source , temp , target):
         #print(f'the disk {N} is moved from {source} to {target}')                                      # 3-1=2 ,a,c,b
     else:                                                                                               #
         if N == 1:
-            print(f'the disk {N} is moved from {source} to {target}')
+            print(f'the disk {N} is moved from {source} to {target} ')
 
         else:
+
             hanoi(N-1,source,target,temp)
-            print(f'the disk {N} is moved from {source} to {target} using {temp} ')
+            print(N)
+            print(f'the disk {N} is moved from {source} to {target}  ')
+
             hanoi(N-1,temp,source,target)
 
 n = 3
@@ -53,12 +61,12 @@ def B():
 #t1.start()
 #t2.start()
 
-import csv
-fp  = open('timetable.csv','r')
-reader = csv.reader(fp)
 
-import pyautogui
-import  time , pywhatkit
-n = 1000
-for i in range(n):
-    pywhatkit.sendwhats_image("+916382231765","")
+from gtts import gTTS
+import os
+
+text = "welcome"
+lang = "en"
+
+s = gTTS(text=text,lang="en",slow=False)
+s.save("dsa.mp3")
