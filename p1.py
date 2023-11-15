@@ -60,13 +60,7 @@ def B():
 
 #t1.start()
 #t2.start()
-
-
 from gtts import gTTS
-import os
 
-text = "welcome"
-lang = "en"
-
-s = gTTS(text=text,lang="en",slow=False)
-s.save("dsa.mp3")
+s= [1,32,4]
+print(str(s[1:]))

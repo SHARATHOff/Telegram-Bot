@@ -36,11 +36,15 @@ dispature = updater.dispatcher
 def send_docu(update,context):
     text = str(update.message.text).lower()
     temp = text.split()
-    text_speech(temp[1],"en")
+    t = ""
+    for i in temp[1:]:
+        t+=f"{i} "
+
+    text_speech(t,"en")
     update.message.reply_document(
         document=open("temp/file.mp3", "rb"),
         filename="file.mp3",
-        caption=temp[1]
+        caption=t
     )
 def bot_talk(update,context):
     while True:
