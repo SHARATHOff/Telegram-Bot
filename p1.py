@@ -32,7 +32,6 @@ def hanoi( N , source , temp , target):
             print(f'the disk {N} is moved from {source} to {target} ')
 
         else:
-
             hanoi(N-1,source,target,temp)
             print(N)
             print(f'the disk {N} is moved from {source} to {target}  ')
@@ -61,12 +60,9 @@ def B():
 #t1.start()
 #t2.start()
 
+import             y
+s = 1
+f = 1
 
-from gtts import gTTS
-import os
+print(s.eq(f))
 
-text = "welcome"
-lang = "en"
-
-s = gTTS(text=text,lang="en",slow=False)
-s.save("dsa.mp3")

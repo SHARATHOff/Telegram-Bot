@@ -4,6 +4,8 @@ import csv
 import gtts
 import subprocess
 
+
+
 def text_speech(text,lang):
     file = gtts.gTTS(text=text,lang="en",slow=False)
     file.save("temp/file.mp3")
@@ -32,15 +34,48 @@ TOKKEN = "6502181588:AAEifHo_iMMmZi7YjUcPO2EoN2yy7pjenxY"
 
 updater = telegram.ext.Updater(TOKKEN,use_context=True)
 dispature = updater.dispatcher
+def student_info(update,context):
+    fp1 = open("students_data.csv", "r")
+    reader1 = csv.reader(fp1)
+    text = str(update.message.text).lower()
+    temp = text.split()
+    if len(temp)==2:
+        temp_txt = ''''''
+        if temp[1] == "all":
+            for i in reader1:
+                for j in i:
+                    temp_txt+=f"{j} \n"
+            update.message.reply_text(temp_txt)
+
+        elif type(int(temp[1])) == type(1):
+            for k in reader1:
+                for f in k :
+                    if f[0].endswith(f"{temp[1]}"):
+                        temp_txt+=k
+                    else:
+                        temp+="name unknown"
+
+            update.message.reply_text(temp_txt)
+        else:
+            update.message.reply_text("unable to find person")
+
+
+    else:
+        update.message.reply_text("Try again")
+
 
 def send_docu(update,context):
     text = str(update.message.text).lower()
     temp = text.split()
-    text_speech(temp[1],"en")
+    t = ""
+    for i in temp[1:]:
+        t+=f"{i} "
+
+    text_speech(t,"en")
     update.message.reply_document(
         document=open("temp/file.mp3", "rb"),
         filename="file.mp3",
-        caption=temp[1]
+        caption=t
     )
 def bot_talk(update,context):
     while True:
@@ -111,6 +146,7 @@ print("Started......")
 dispature.add_handler(telegram.ext.CommandHandler('start', start))
 dispature.add_handler(telegram.ext.CommandHandler('whatsapp',whatsapp))
 #dispature.add_handler(telegram.ext.CommandHandler('spammsg',spam_msg))
+dispature.add_handler(telegram.ext.CommandHandler('data',student_info))
 dispature.add_handler(telegram.ext.CommandHandler('voice',send_docu))
 dispature.add_handler(telegram.ext.CommandHandler('period',period))
 dispature.add_handler(telegram.ext.CommandHandler('wiki',wiki))
