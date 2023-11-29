@@ -60,9 +60,13 @@ def B():
 #t1.start()
 #t2.start()
 
-import             y
-s = 1
-f = 1
-
-print(s.eq(f))
+N=5
+for i in range(1,N+1):
+    for k in range (N, i, -1):
+        print(" ",end=' ')
+    for j in range(1,i+1):
+        print(j,end=' ')
+    for k in range(i-1,0,-1):
+        print(k,end=' ')
+    print()
 
