@@ -47,15 +47,18 @@ def student_info(update,context):
                     temp_txt+=f"{j} \n"
             update.message.reply_text(temp_txt)
 
-        elif type(int(temp[1])) == type(1):
+        elif temp[1].isalnum():
+            temp_txt1
             for k in reader1:
                 for f in k :
-                    if f[0].endswith(f"{temp[1]}"):
-                        temp_txt+=k
+
+                    if f.endswith(f"{temp[1]}"):
+                        temp_txt1= k
                     else:
                         temp+="name unknown"
 
-            update.message.reply_text(temp_txt)
+            update.message.reply_text(temp_txt1)
+
         else:
             update.message.reply_text("unable to find person")
 
