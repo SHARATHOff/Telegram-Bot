@@ -48,7 +48,7 @@ def student_info(update,context):
             update.message.reply_text(temp_txt)
 
         elif temp[1].isalnum():
-            temp_txt1
+            temp_txt1 = ''''''
             for k in reader1:
                 for f in k :
 
@@ -70,13 +70,16 @@ def student_info(update,context):
 def send_docu(update,context):
     text = str(update.message.text).lower()
     temp = text.split()
-    t = ""
-    for i in temp[1:]:
-        t+=f"{i} "
+    if "sharath" in temp:
+        update.message.reply_text("F***k off Worst Fellow")
+    else:
+        t = ""
+        for i in temp[1:]:
+            t+=f"{i} "
 
-    text_speech(t,"en")
-    update.message.reply_document(
-        document=open("temp/file.mp3", "rb"),
+        text_speech(t,"en")
+        update.message.reply_document(
+         document=open("temp/file.mp3", "rb"),
         filename="file.mp3",
         caption=t
     )
