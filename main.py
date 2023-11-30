@@ -4,6 +4,14 @@ import csv
 import gtts
 import subprocess
 
+from googlesearch import search
+def google_search(query):
+    try:
+        search_results = search(query,num=10)
+        return search_results
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 
 def text_speech(text,lang):
@@ -34,6 +42,22 @@ TOKKEN = "6502181588:AAEifHo_iMMmZi7YjUcPO2EoN2yy7pjenxY"
 
 updater = telegram.ext.Updater(TOKKEN,use_context=True)
 dispature = updater.dispatcher
+
+
+
+def google_search_gen(update,context):
+    text = str(update.message.text).lower()
+    temp = text.split()
+    result = google_search(str(temp[1:]))
+    temp2 = ""
+    if result:
+        for res in result:
+            temp2+=f"{res}\n"
+        update.message.reply_text(temp2)
+
+
+
+
 def student_info(update,context):
     fp1 = open("students_data.csv", "r")
     reader1 = csv.reader(fp1)
@@ -48,7 +72,7 @@ def student_info(update,context):
             update.message.reply_text(temp_txt)
 
         elif temp[1].isalnum():
-            temp_txt1
+            temp_txt1 = ''''''
             for k in reader1:
                 for f in k :
 
@@ -70,13 +94,16 @@ def student_info(update,context):
 def send_docu(update,context):
     text = str(update.message.text).lower()
     temp = text.split()
-    t = ""
-    for i in temp[1:]:
-        t+=f"{i} "
+    if "sharath" in temp:
+        update.message.reply_text("F***k off Worst Fellow")
+    else:
+        t = ""
+        for i in temp[1:]:
+            t+=f"{i} "
 
-    text_speech(t,"en")
-    update.message.reply_document(
-        document=open("temp/file.mp3", "rb"),
+        text_speech(t,"en")
+        update.message.reply_document(
+         document=open("temp/file.mp3", "rb"),
         filename="file.mp3",
         caption=t
     )

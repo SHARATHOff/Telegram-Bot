@@ -60,13 +60,35 @@ def B():
 #t1.start()
 #t2.start()
 
-N=5
-for i in range(1,N+1):
-    for k in range (N, i, -1):
-        print(" ",end=' ')
-    for j in range(1,i+1):
-        print(j,end=' ')
-    for k in range(i-1,0,-1):
-        print(k,end=' ')
-    print()
+
+
+from googlesearch import search
+
+from googlesearch import search
+
+
+def google_search(query):
+    try:
+        search_results = search(query)
+        return search_results
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
+while (True):
+    query = input("Enter your query :")
+    results = google_search(query)
+    if results:
+        print("Search Results:")
+        for result in results:
+            print(result)
+    elif (query == "a"):
+        break
+    else:
+        print("Inavalid prompt")
+
+
+
+
 
